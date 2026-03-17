@@ -14,13 +14,13 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --gold:       #c9a227;
-            --gold-light: #d4b04a;
-            --gold-dim:   rgba(201,162,39,0.18);
-            --dark:       #0d0b08;
-            --dark-mid:   #141009;
-            --white:      #f5f0e8;
-            --muted:      rgba(245,240,232,0.45);
+            --gold:       #D2A850;
+            --gold-light: #b08a1e;
+            --gold-dim:   rgba(210,168,80,0.18);
+            --dark:       #FDFDFD;
+            --dark-mid:   #F5F5F5;
+            --white:      #1A1A1A;
+            --muted:      #666666;
         }
 
         body {
@@ -39,7 +39,7 @@
             transform: translateX(-50%);
             width: 80vw;
             height: 60vh;
-            background: radial-gradient(ellipse, rgba(201,162,39,0.06) 0%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(210,168,80,0.15) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
         }
@@ -54,7 +54,7 @@
             font-size: clamp(12rem, 40vw, 28rem);
             font-weight: 300;
             letter-spacing: 0.3em;
-            color: rgba(201,162,39,0.045);
+            color: #F0F0F0;
             user-select: none;
             pointer-events: none;
             z-index: 0;
@@ -128,8 +128,8 @@
 
         /* ── Individual card ── */
         .plan-card {
-            background: rgba(255,255,255,0.025);
-            border: 1px solid rgba(201,162,39,0.14);
+            background: #FFFFFF;
+            border: 1px solid rgba(210,168,80,0.3);
             border-radius: 18px;
             padding: 2.2rem 2rem;
             position: relative;
@@ -155,22 +155,22 @@
         /* Hover: card lifts */
         .plan-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(201,162,39,0.06);
-            border-color: rgba(201,162,39,0.3);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08), 0 0 20px rgba(210,168,80,0.15);
+            border-color: rgba(210,168,80,0.5);
         }
 
         /* ── CORE card — highlighted ── */
         .plan-card.core {
-            background: rgba(201,162,39,0.06);
-            border-color: rgba(201,162,39,0.35);
+            background: rgba(210,168,80,0.04);
+            border-color: rgba(210,168,80,0.6);
             /* slightly "taller" via padding */
             padding-top: 2.6rem;
             padding-bottom: 2.6rem;
-            box-shadow: 0 0 40px rgba(201,162,39,0.08), 0 0 80px rgba(201,162,39,0.04);
+            box-shadow: 0 0 40px rgba(210,168,80,0.1), 0 0 80px rgba(210,168,80,0.05);
         }
 
         .plan-card.core:hover {
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 50px rgba(201,162,39,0.14);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.1), 0 0 40px rgba(210,168,80,0.2);
         }
 
         /* Popular badge on Core card */
@@ -219,7 +219,7 @@
             gap: 0.65rem;
             font-size: 0.8rem;
             font-weight: 300;
-            color: rgba(245,240,232,0.7);
+            color: rgba(26,26,26,0.7);
             padding: 0.32rem 0;
             line-height: 1.5;
         }
@@ -278,7 +278,7 @@
 
         .status-text {
             font-size: 0.73rem;
-            color: rgba(245,240,232,0.55);
+            color: rgba(26,26,26,0.55);
             font-weight: 300;
         }
 
@@ -361,7 +361,7 @@
         .best-for {
             font-size: 0.72rem;
             font-weight: 300;
-            color: rgba(245,240,232,0.35);
+            color: rgba(26,26,26,0.35);
             text-align: center;
             margin-top: 1rem;
             font-style: italic;
@@ -372,7 +372,7 @@
             text-align: center;
             margin-top: 2.5rem;
             font-size: 0.72rem;
-            color: rgba(245,240,232,0.2);
+            color: rgba(26,26,26,0.2);
             font-weight: 300;
         }
     </style>

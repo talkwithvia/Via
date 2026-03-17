@@ -16,11 +16,11 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --gold:       #c9a227;
-            --gold-light: #d4b04a;
-            --dark:       #0d0b08;
-            --white:      #f5f0e8;
-            --muted:      rgba(245,240,232,0.45);
+            --gold:       #D2A850;
+            --gold-light: #b08a1e;
+            --dark:       #FDFDFD;
+            --white:      #1A1A1A;
+            --muted:      #666666;
         }
 
         body {
@@ -44,7 +44,7 @@
             transform: translateX(-50%);
             width: 70vw;
             height: 55vh;
-            background: radial-gradient(ellipse, rgba(201,162,39,0.07) 0%, transparent 70%);
+            background: radial-gradient(ellipse, rgba(210,168,80,0.1) 0%, transparent 70%);
             pointer-events: none;
             z-index: 0;
         }
@@ -60,7 +60,7 @@
             font-weight: 300;
             letter-spacing: 0.3em;
             /* Very subtle: opacity 5–8% as specified */
-            color: rgba(201,162,39,0.06);
+            color: #F0F0F0;
             user-select: none;
             pointer-events: none;
             z-index: 0;
@@ -117,8 +117,9 @@
 
         /* ── Login card ── */
         .login-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(201,162,39,0.18);
+            background: #FFFFFF;
+            border: 1px solid rgba(210,168,80,0.3);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.06);
             border-radius: 20px;
             padding: 3rem 2.8rem 2.6rem;
             width: min(90vw, 420px);
@@ -165,7 +166,7 @@
             font-size: 0.62rem;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: rgba(245,240,232,0.35);
+            color: rgba(26,26,26,0.35);
             margin-bottom: 0.55rem;
         }
 
@@ -183,7 +184,7 @@
             transition: border-color 0.3s;
         }
 
-        .field-input::placeholder { color: rgba(245,240,232,0.25); }
+        .field-input::placeholder { color: rgba(26,26,26,0.25); }
         .field-input:focus         { border-bottom-color: var(--gold); }
 
         /* ── Get Started button ── */

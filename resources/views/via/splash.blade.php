@@ -3,330 +3,333 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIA — Enter the Ecosystem</title>
+    <title>VIA — Build Wealth Through Disciplined Habits</title>
 
-    <!-- Google Fonts: Cormorant Garamond for the VIA wordmark, Inter for body -->
+    <!-- Google Fonts: Inter for general typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* ── Reset & Base ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --gold:      #c9a227;
-            --gold-light:#d4b04a;
-            --dark:      #0d0b08;
-            --dark-mid:  #1a1208;
-            --white:     #f5f0e8;
+            --brand-gold: #D2A850;
+            --text-dark: #1A1A1A;
+            --text-light: #666666;
+            --bg-light: #FDFDFD;
+            --font-main: 'Inter', sans-serif;
         }
 
         body {
-            background: var(--dark);
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
+            background-color: var(--bg-light);
+            font-family: var(--font-main);
+            color: var(--text-dark);
+            line-height: 1.5;
+            overflow-x: hidden;
         }
 
-        /* ── Full-screen overlay that fades from black ── */
-        .fade-overlay {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            animation: overlayFade 1.2s ease-out forwards;
-            z-index: 50;
+        /* ── Navigation ── */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+            color: var(--text-dark);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--brand-gold);
+        }
+
+        .btn-signin {
+            color: var(--text-dark);
+        }
+
+        .btn-primary {
+            background-color: var(--text-dark);
+            color: white !important;
+            padding: 0.6rem 1.2rem;
+            border-radius: 999px;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.85;
+            color: white !important;
+        }
+
+        /* ── Hero Section ── */
+        .hero {
+            display: flex;
+            max-width: 1400px;
+            margin: 2rem auto 0;
+            padding: 0 5%;
+            min-height: calc(100vh - 100px);
+            align-items: center;
+            position: relative;
+        }
+
+        .hero-content {
+            flex: 1;
+            padding-right: 2rem;
+            z-index: 2;
+        }
+
+        /* The faint big VIA in the background */
+        .hero-bg-text {
+            position: absolute;
+            left: 30%;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 35vw;
+            font-weight: 800;
+            color: #F0F0F0;
+            z-index: 0;
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            user-select: none;
             pointer-events: none;
         }
 
-        @keyframes overlayFade {
-            0%   { opacity: 1; }
-            100% { opacity: 0; }
+        .badge {
+            display: inline-block;
+            background-color: #F2F2F2;
+            color: #555;
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        /* ── Background gradient ── */
-        .splash-bg {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(ellipse at 50% 50%, #1a1208 0%, #0d0b08 60%, #000 100%);
+        .hero h1 {
+            font-size: clamp(3rem, 5vw, 5rem);
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
         }
 
-        /* ── Ambient gold particles (purely decorative) ── */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            background: var(--gold);
-            opacity: 0;
-            animation: particleDrift var(--dur, 6s) var(--delay, 0s) ease-in-out infinite;
+        .hero h1 .highlight {
+            color: var(--brand-gold);
+            display: block;
         }
 
-        @keyframes particleDrift {
-            0%   { opacity: 0; transform: translateY(0) scale(0.5); }
-            30%  { opacity: 0.15; }
-            70%  { opacity: 0.08; }
-            100% { opacity: 0; transform: translateY(-120px) scale(1); }
+        .hero p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
         }
 
-        /* ── Centre stage ── */
-        .splash-center {
-            position: fixed;
-            inset: 0;
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .btn-hero {
+            background-color: var(--text-dark);
+            color: white;
+            text-decoration: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-dark);
+            border: 1px solid #E0E0E0;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--text-dark);
+            transform: translateY(-2px);
+        }
+
+        /* ── Simple Stats Section ── */
+        .stats {
+            display: flex;
+            gap: 4rem;
+            margin-top: 1rem;
+        }
+
+        .stat {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* ── VIA Logo wrapper — clip for shimmer ── */
-        .logo-wrapper {
-            position: relative;
-            opacity: 0;
-            /* Step 1: logo fades in */
-            animation:
-                logoFadeIn   1.4s 0.8s ease-out forwards,
-                logoZoom     2.0s 0.8s ease-out forwards,
-                logoSlideUp  0.7s 3.4s cubic-bezier(.4,0,.2,1) forwards;
+        .stat-val {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
         }
 
-        @keyframes logoFadeIn {
-            0%   { opacity: 0; }
-            100% { opacity: 1; }
-        }
-
-        /* Step 2: Camera zooms into VIA */
-        @keyframes logoZoom {
-            0%   { transform: scale(0.85); }
-            55%  { transform: scale(1.08); }
-            100% { transform: scale(1.0); }
-        }
-
-        /* Step 3: Logo slides upward to make room for card */
-        @keyframes logoSlideUp {
-            0%   { transform: translateY(0);   opacity: 1; }
-            100% { transform: translateY(-30px); opacity: 1; }
-        }
-
-        /* ── VIA wordmark text ── */
-        .via-wordmark {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(5rem, 18vw, 10rem);
-            font-weight: 300;
-            letter-spacing: 0.35em;
-            color: var(--white);
-            position: relative;
-            overflow: hidden;
-            /* padding to show shimmer extending past left/right */
-            padding: 0 0.2em;
-            user-select: none;
-        }
-
-        /* Shimmer light that sweeps across the letters */
-        .via-wordmark::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(
-                105deg,
-                transparent 20%,
-                rgba(201,162,39,0.35) 50%,
-                transparent 80%
-            );
-            /* shimmer starts when logo is visible and zooming */
-            animation: shimmerPass 1.8s 1.6s ease-in-out forwards;
-        }
-
-        @keyframes shimmerPass {
-            0%   { left: -100%; }
-            100% { left: 160%; }
-        }
-
-        /* ── Thin gold line under the wordmark ── */
-        .via-line {
-            width: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 0.6rem auto 0;
-            animation: lineExpand 1.0s 1.8s ease-out forwards;
-        }
-
-        @keyframes lineExpand {
-            0%   { width: 0;    opacity: 0; }
-            100% { width: 160px; opacity: 1; }
-        }
-
-        /* ── Tagline beneath the line ── */
-        .via-tagline {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.7rem;
-            font-weight: 300;
-            letter-spacing: 0.45em;
+        .stat-lbl {
+            font-size: 0.85rem;
+            color: var(--text-light);
             text-transform: uppercase;
-            color: rgba(201,162,39,0.6);
-            margin-top: 1rem;
-            opacity: 0;
-            animation: taglineFade 1.0s 2.0s ease-out forwards;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            margin-top: 0.5rem;
         }
 
-        @keyframes taglineFade {
-            0%   { opacity: 0; transform: translateY(6px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── Login card — fades in after logo animates up ── */
-        .login-card {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
+        /* ── Placeholder for Right Side Image ── */
+        .hero-image {
+            flex: 1;
             display: flex;
             justify-content: center;
-            padding-bottom: 12vh;
-
-            opacity: 0;
-            transform: translateY(20px);
-            /* appears after logo slides up (~3.4s + 0.5s) */
-            animation: cardAppear 0.9s 3.9s cubic-bezier(.2,.8,.3,1) forwards;
+            align-items: center;
+            z-index: 2;
         }
-
-        @keyframes cardAppear {
-            0%   { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .login-card-inner {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(201,162,39,0.18);
-            border-radius: 16px;
-            padding: 2.4rem 2.8rem 2.2rem;
-            width: min(90vw, 400px);
-            text-align: center;
-            backdrop-filter: blur(12px);
-        }
-
-        .card-welcome {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.7rem;
-            font-weight: 400;
-            color: var(--white);
-            margin-bottom: 0.35rem;
-        }
-
-        .card-sub {
-            font-size: 0.8rem;
-            font-weight: 300;
-            color: rgba(245,240,232,0.45);
-            letter-spacing: 0.02em;
-            margin-bottom: 1.8rem;
-        }
-
-        .email-field {
+        
+        .hero-image-placeholder {
             width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid rgba(201,162,39,0.3);
-            padding: 0.7rem 0.2rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.875rem;
-            color: var(--white);
-            outline: none;
-            transition: border-color 0.3s;
-            margin-bottom: 1.6rem;
+            max-width: 500px;
+            aspect-ratio: 4/5;
+            background-color: #F5EFEB; /* Matching the warm tone in the PDF image */
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .email-field::placeholder { color: rgba(245,240,232,0.3); }
-        .email-field:focus { border-bottom-color: var(--gold); }
-
-        .btn-get-started {
-            width: 100%;
-            background: linear-gradient(135deg, var(--gold) 0%, #b08a1e 100%);
-            color: #0d0b08;
-            border: none;
-            border-radius: 8px;
-            padding: 0.85rem 1.5rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: opacity 0.25s, transform 0.2s;
+        /* Faux image styling representing the person in the PDF */
+        .hero-image-placeholder::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            width: 80%;
+            height: 90%;
+            background-color: #D2A850;
+            opacity: 0.1;
+            border-radius: 50% 50% 0 0;
         }
 
-        .btn-get-started:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
-        }
-
-        .btn-get-started:active { transform: translateY(0); }
-
-        /* Loading spinner overlay on button */
-        .btn-get-started.loading {
-            opacity: 0.7;
-            pointer-events: none;
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 2rem;
+            }
+            .hero-content {
+                padding-right: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-bg-text {
+                top: 20%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .stats {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 2rem;
+            }
+            .hero-image {
+                margin-top: 3rem;
+                width: 100%;
+            }
+            .nav-links {
+                display: none; /* simple mobile nav hide for now */
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Initial black fade overlay -->
-    <div class="fade-overlay"></div>
-
-    <!-- Background -->
-    <div class="splash-bg">
-        <!-- Ambient floating particles -->
-        <div class="particle" style="width:3px;height:3px;left:15%;top:70%;--dur:7s;--delay:2s;"></div>
-        <div class="particle" style="width:2px;height:2px;left:30%;top:55%;--dur:9s;--delay:3.5s;"></div>
-        <div class="particle" style="width:4px;height:4px;left:65%;top:75%;--dur:8s;--delay:1s;"></div>
-        <div class="particle" style="width:2px;height:2px;left:80%;top:60%;--dur:6s;--delay:4s;"></div>
-        <div class="particle" style="width:3px;height:3px;left:50%;top:80%;--dur:10s;--delay:0.5s;"></div>
-        <div class="particle" style="width:2px;height:2px;left:20%;top:40%;--dur:8s;--delay:2.5s;"></div>
-    </div>
-
-    <!-- Centre stage: VIA logo + login card together -->
-    <div class="splash-center">
-
-        <!-- VIA Logo -->
-        <div class="logo-wrapper" id="logoWrapper">
-            <div class="via-wordmark" id="viaWordmark">VIA</div>
-            <div class="via-line"></div>
-            <p class="via-tagline">The Wealth Ecosystem</p>
+    <nav class="navbar">
+        <a href="/" class="nav-logo">VIA</a>
+        <div class="nav-links">
+            <a href="#">Features</a>
+            <a href="#">Pricing</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+            <a href="/login" class="btn-signin">Sign In</a>
+            <a href="/create-account" class="btn-primary">Get Started</a>
         </div>
+    </nav>
 
-        <!-- Login card slides in below after logo animates up -->
-        <div class="login-card" id="loginCard">
-            <div class="login-card-inner">
-                <h1 class="card-welcome">Welcome to VIA</h1>
-                <p class="card-sub">Enter your email to begin</p>
+    <main class="hero">
+        <div class="hero-bg-text">VIA</div>
+        
+        <div class="hero-content">
+            <div class="badge">Launching March 2026</div>
+            <h1>
+                Build Wealth Through
+                <span class="highlight">Disciplined Habits</span>
+            </h1>
+            <p>Join the VIA ecosystem and transform your financial future. Access powerful tools, exclusive communities, and opportunities designed for serious wealth builders.</p>
+            
+            <div class="hero-buttons">
+                <a href="/create-account" class="btn-hero">Start Your Journey</a>
+                <a href="#" class="btn-hero btn-secondary">Learn More</a>
+            </div>
 
-                <form action="/get-started" method="POST">
-                    @csrf
-                    <input
-                        id="email-input"
-                        class="email-field"
-                        type="email"
-                        name="email"
-                        placeholder="Email Address"
-                        required
-                        autocomplete="email"
-                    >
-                    <button class="btn-get-started" id="getStartedBtn" type="submit">
-                        Get Started
-                    </button>
-                </form>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-val">10K+</span>
+                    <span class="stat-lbl">Active Members</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-val">$50M+</span>
+                    <span class="stat-lbl">Wealth Created</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-val">98%</span>
+                    <span class="stat-lbl">Satisfaction Rate</span>
+                </div>
             </div>
         </div>
 
-    </div>
-
-    <script>
-        // Add a brief loading state on button click before form submit
-        document.getElementById('getStartedBtn').addEventListener('click', function(e) {
-            this.textContent = 'Loading…';
-            this.classList.add('loading');
-        });
-    </script>
+        <div class="hero-image">
+            <div class="hero-image-placeholder">
+                <!-- This serves as a placeholder for the actual image from the PDF -->
+                <span style="color: rgba(0,0,0,0.3); font-size: 0.9rem; z-index: 1;">[ Hero Image Placeholder ]</span>
+            </div>
+        </div>
+    </main>
 
 </body>
 </html>
