@@ -4,389 +4,360 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VIA — Choose Your Membership</title>
+    <meta name="description" content="Select a VIA membership and begin your journey.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
-        /* ── Reset & Base ── */
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --gold:       #D2A850;
-            --gold-light: #b08a1e;
-            --gold-dim:   rgba(210,168,80,0.18);
-            --dark:       #FDFDFD;
-            --dark-mid:   #F5F5F5;
-            --white:      #1A1A1A;
-            --muted:      #666666;
+            --cream:      #f9f8f6;
+            --cream-dark: #f0ede8;
+            --slate:      #21242c;
+            --slate-mid:  #4a5568;
+            --muted:      #6b7280;
+            --terra:      #b2734d;
+            --terra-dark: #8f5a3a;
+            --border:     #dee0e4;
+            --white:      #ffffff;
         }
 
         body {
-            background: var(--dark);
-            font-family: 'Inter', sans-serif;
-            color: var(--white);
+            background-color: var(--cream);
+            font-family: 'Inter', system-ui, sans-serif;
+            color: var(--slate);
             min-height: 100vh;
         }
 
-        /* ── Subtle radial glow at top ── */
-        body::before {
-            content: '';
-            position: fixed;
-            top: -20%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80vw;
-            height: 60vh;
-            background: radial-gradient(ellipse, rgba(210,168,80,0.15) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
+        /* ── Navigation ── */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2.5rem;
+            height: 56px;
+            background: rgba(249, 248, 246, 0.92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(222, 224, 228, 0.6);
         }
 
-        /* ── Faint VIA watermark ── */
-        .watermark {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(12rem, 40vw, 28rem);
-            font-weight: 300;
-            letter-spacing: 0.3em;
-            color: #F0F0F0;
-            user-select: none;
-            pointer-events: none;
-            z-index: 0;
-            filter: blur(1px);
+        .nav-logo {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.3rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            color: var(--slate);
+            text-decoration: none;
         }
 
-        /* ── Page wrapper ── */
-        .page {
-            position: relative;
-            z-index: 1;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 4rem 1.5rem 5rem;
-        }
-
-        /* ── Tiny back nav ── */
-        .back-nav {
+        .nav-center {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            color: var(--muted);
-            font-size: 0.75rem;
-            letter-spacing: 0.06em;
+            gap: 2.5rem;
+        }
+
+        .nav-center a {
+            font-size: 0.85rem;
+            color: var(--slate-mid);
             text-decoration: none;
-            text-transform: uppercase;
-            margin-bottom: 3.5rem;
             transition: color 0.2s;
         }
-        .back-nav:hover { color: var(--gold); }
-        .back-nav svg { width: 14px; height: 14px; }
 
-        /* ── Page header ── */
+        .nav-center a:hover { color: var(--slate); }
+
+        .nav-badge-tag {
+            font-size: 0.65rem;
+            background: var(--cream-dark);
+            color: var(--muted);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 0.15rem 0.6rem;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .nav-right a {
+            font-size: 0.85rem;
+            color: var(--slate-mid);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: color 0.2s;
+        }
+
+        .nav-right a:hover { color: var(--slate); }
+
+        /* ── Page Content ── */
+        .page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem 6rem;
+        }
+
+        /* ── Back link ── */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 3rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover { color: var(--terra); }
+
+        /* ── Page Header ── */
         .page-header {
             text-align: center;
-            margin-bottom: 3.5rem;
+            margin-bottom: 4rem;
         }
 
         .page-eyebrow {
-            font-size: 0.68rem;
-            letter-spacing: 0.35em;
+            font-size: 0.72rem;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 0.9rem;
+            color: var(--terra);
+            margin-bottom: 0.8rem;
         }
 
         .page-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2rem, 5vw, 3rem);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: clamp(2rem, 4vw, 3rem);
             font-weight: 400;
-            color: var(--white);
-            line-height: 1.15;
-            margin-bottom: 1rem;
+            color: var(--slate);
+            margin-bottom: 0.8rem;
         }
 
         .page-sub {
-            font-size: 0.85rem;
-            font-weight: 300;
+            font-size: 0.9rem;
             color: var(--muted);
             max-width: 480px;
             margin: 0 auto;
             line-height: 1.7;
         }
 
-        /* ── Cards grid ── */
-        .cards-grid {
+        /* ── Pricing Grid ── */
+        .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.4rem;
-            align-items: start;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            align-items: stretch;
         }
 
-        /* ── Individual card ── */
-        .plan-card {
-            background: #FFFFFF;
-            border: 1px solid rgba(210,168,80,0.3);
-            border-radius: 18px;
+        /* ── Price Card ── */
+        .price-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
             padding: 2.2rem 2rem;
             position: relative;
             cursor: pointer;
-            /* Fade-in + rise animation — staggered per card */
+            display: flex;
+            flex-direction: column;
+            /* Entrance animation */
             opacity: 0;
-            transform: translateY(24px);
-            animation: cardRise 0.7s ease-out forwards;
-            transition: transform 0.25s cubic-bezier(.2,.8,.3,1),
-                        box-shadow 0.25s ease,
-                        border-color 0.25s ease;
+            transform: translateY(20px);
+            animation: cardIn 0.6s ease-out forwards;
+            transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
         }
 
-        .plan-card:nth-child(1) { animation-delay: 0.15s; }
-        .plan-card:nth-child(2) { animation-delay: 0.30s; }
-        .plan-card:nth-child(3) { animation-delay: 0.45s; }
+        .price-card:nth-child(1) { animation-delay: 0.1s; }
+        .price-card:nth-child(2) { animation-delay: 0.2s; }
+        .price-card:nth-child(3) { animation-delay: 0.3s; }
 
-        @keyframes cardRise {
-            0%   { opacity: 0; transform: translateY(24px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes cardIn {
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Hover: card lifts */
-        .plan-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.08), 0 0 20px rgba(210,168,80,0.15);
-            border-color: rgba(210,168,80,0.5);
+        .price-card:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transform: translateY(-4px);
+            border-color: #c5c8ce;
         }
 
-        /* ── CORE card — highlighted ── */
-        .plan-card.core {
-            background: rgba(210,168,80,0.04);
-            border-color: rgba(210,168,80,0.6);
-            /* slightly "taller" via padding */
-            padding-top: 2.6rem;
-            padding-bottom: 2.6rem;
-            box-shadow: 0 0 40px rgba(210,168,80,0.1), 0 0 80px rgba(210,168,80,0.05);
+        /* Featured card */
+        .price-card.featured {
+            border-color: var(--terra);
+            box-shadow: 0 4px 20px rgba(178, 115, 77, 0.15);
         }
 
-        .plan-card.core:hover {
-            box-shadow: 0 16px 40px rgba(0,0,0,0.1), 0 0 40px rgba(210,168,80,0.2);
+        .price-card.featured:hover {
+            box-shadow: 0 12px 35px rgba(178, 115, 77, 0.2);
+            border-color: var(--terra);
         }
 
-        /* Popular badge on Core card */
-        .popular-badge {
-            position: absolute;
-            top: -14px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--gold), #b08a1e);
-            color: #0d0b08;
-            font-size: 0.63rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            border-radius: 20px;
-            padding: 0.3rem 1.1rem;
-            white-space: nowrap;
-        }
-
-        /* ── Card tier label ── */
-        .card-tier {
-            font-family: 'Cormorant Garamond', serif;
+        /* ── Card Header ── */
+        .card-name {
+            font-family: 'Cormorant Garamond', Georgia, serif;
             font-size: 1.5rem;
-            font-weight: 400;
-            color: var(--white);
+            font-weight: 500;
+            color: var(--slate);
             margin-bottom: 0.25rem;
         }
 
-        .card-tier-sub {
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 1.4rem;
+        .card-tagline {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── Price display ── */
+        .card-price {
+            margin-bottom: 1.8rem;
+        }
+
+        .price-amount {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            color: var(--terra);
+            line-height: 1;
+        }
+
+        .price-amount sup {
+            font-size: 1.1rem;
+            vertical-align: super;
+        }
+
+        .price-period {
+            font-size: 0.8rem;
+            color: var(--muted);
+            margin-top: 0.2rem;
         }
 
         /* ── Features list ── */
         .features-list {
             list-style: none;
-            margin-bottom: 1.6rem;
+            margin-bottom: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
         }
 
         .features-list li {
+            font-size: 0.85rem;
+            color: var(--slate-mid);
             display: flex;
             align-items: flex-start;
-            gap: 0.65rem;
-            font-size: 0.8rem;
-            font-weight: 300;
-            color: rgba(26,26,26,0.7);
-            padding: 0.32rem 0;
+            gap: 0.6rem;
             line-height: 1.5;
         }
 
-        /* Gold checkmark */
         .features-list li::before {
-            content: '✦';
-            color: var(--gold);
-            font-size: 0.55rem;
-            margin-top: 0.35rem;
+            content: '·';
+            color: var(--terra);
+            font-size: 1.2rem;
+            line-height: 1.1;
             flex-shrink: 0;
         }
 
-        /* ── Divider ── */
-        .card-divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(201,162,39,0.2), transparent);
-            margin: 1.4rem 0;
-        }
-
-        /* ── Status preview section ── */
-        .status-preview {
-            margin-bottom: 1.6rem;
-        }
-
-        .status-label {
-            font-size: 0.65rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(201,162,39,0.5);
-            margin-bottom: 0.85rem;
-        }
-
-        .status-item {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            padding: 0.45rem 0.7rem;
-            border-radius: 8px;
-            background: rgba(201,162,39,0.04);
-            border: 1px solid rgba(201,162,39,0.08);
-            margin-bottom: 0.4rem;
-        }
-
-        .status-icon {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: rgba(201,162,39,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
-            flex-shrink: 0;
-        }
-
-        .status-text {
-            font-size: 0.73rem;
-            color: rgba(26,26,26,0.55);
-            font-weight: 300;
-        }
-
-        .status-value {
-            font-size: 0.72rem;
-            color: var(--gold-light);
-            margin-left: auto;
-            font-weight: 400;
-        }
-
-        /* ── Price ── */
-        .card-price {
-            display: flex;
-            align-items: baseline;
-            gap: 0.3rem;
-            margin-bottom: 1.4rem;
-        }
-
-        .price-currency {
-            font-size: 0.9rem;
-            color: var(--gold);
-            font-weight: 400;
-        }
-
-        .price-amount {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.4rem;
-            font-weight: 400;
-            color: var(--white);
-            line-height: 1;
-        }
-
-        .price-period {
-            font-size: 0.75rem;
-            color: var(--muted);
-            font-weight: 300;
-        }
-
-        /* ── Join button ── */
+        /* ── CTA Button ── */
         .btn-join {
-            width: 100%;
-            background: transparent;
-            border: 1px solid rgba(201,162,39,0.35);
-            border-radius: 8px;
-            padding: 0.85rem 1.5rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--gold-light);
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
-            text-decoration: none;
             display: block;
+            width: 100%;
             text-align: center;
+            text-decoration: none;
+            padding: 0.9rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border: 1px solid var(--slate);
+            background: transparent;
+            color: var(--slate);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.15s;
+            margin-top: auto;
         }
 
         .btn-join:hover {
-            background: rgba(201,162,39,0.12);
-            border-color: var(--gold);
+            background: var(--slate);
             color: var(--white);
             transform: translateY(-1px);
         }
 
-        /* Core card button — filled gold */
-        .plan-card.core .btn-join {
-            background: linear-gradient(135deg, var(--gold) 0%, #b08a1e 100%);
-            border-color: transparent;
-            color: #0d0b08;
-            font-weight: 600;
+        .price-card.featured .btn-join {
+            background: var(--terra);
+            color: var(--white);
+            border-color: var(--terra);
         }
 
-        .plan-card.core .btn-join:hover {
-            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
-            transform: translateY(-2px);
-        }
-
-        /* ── Best-for tagline ── */
-        .best-for {
-            font-size: 0.72rem;
-            font-weight: 300;
-            color: rgba(26,26,26,0.35);
-            text-align: center;
-            margin-top: 1rem;
-            font-style: italic;
+        .price-card.featured .btn-join:hover {
+            background: var(--terra-dark);
+            border-color: var(--terra-dark);
         }
 
         /* ── Footer note ── */
         .page-footer {
             text-align: center;
             margin-top: 2.5rem;
-            font-size: 0.72rem;
-            color: rgba(26,26,26,0.2);
-            font-weight: 300;
+            font-size: 0.78rem;
+            color: var(--muted);
+        }
+
+        @media (max-width: 900px) {
+            .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+            .nav-center { display: none; }
+            .navbar { padding: 0 1.2rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Faint watermark for brand presence -->
-    <div class="watermark" aria-hidden="true">VIA</div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="nav-logo">V I A</a>
+        <div class="nav-center">
+            <a href="/subscribe" style="color:var(--slate);font-weight:500;">Explore Opportunities</a>
+            <a href="#">Store</a>
+            <a href="#">Mentorship</a>
+            <a href="#">Blog</a>
+            <span style="display:flex;align-items:center;gap:0.5rem;">
+                <a href="#">Events</a>
+                <span class="nav-badge-tag">Coming Soon</span>
+            </span>
+        </div>
+        <div class="nav-right">
+            <a href="#">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+                Cart
+            </a>
+            <a href="/login">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                    <polyline points="10 17 15 12 10 7"/>
+                    <line x1="15" y1="12" x2="3" y2="12"/>
+                </svg>
+                Login
+            </a>
+        </div>
+    </nav>
 
     <div class="page">
 
         <!-- Back link -->
-        <a href="/get-started" class="back-nav">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <a href="/" class="back-link">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
                 <path d="M10 12L6 8l4-4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             Back
@@ -395,156 +366,73 @@
         <!-- Page header -->
         <header class="page-header">
             <p class="page-eyebrow">Membership</p>
-            <h1 class="page-title">Choose Your VIA Membership</h1>
-            <p class="page-sub">
-                Access the VIA ecosystem and start building wealth
-                through disciplined financial habits.
-            </p>
+            <h1 class="page-title">Access VIA</h1>
+            <p class="page-sub">Choose the membership that fits your journey. Cancel anytime.</p>
         </header>
 
-        <!-- 3 Subscription Cards -->
-        <div class="cards-grid">
+        <!-- Pricing Cards -->
+        <div class="pricing-grid">
 
-            <!-- ── BASIC ── -->
-            <div class="plan-card basic">
-                <div class="card-tier">Basic</div>
-                <div class="card-tier-sub">Foundation</div>
-
-                <ul class="features-list">
-                    <li>Access to VIA ecosystem</li>
-                    <li>Eco Wallet</li>
-                    <li>Savings tracking</li>
-                    <li>Marketplace access</li>
-                </ul>
-
-                <div class="card-divider"></div>
-
-                <!-- Status preview -->
-                <div class="status-preview">
-                    <div class="status-label">Your future status</div>
-                    <div class="status-item">
-                        <div class="status-icon">🌱</div>
-                        <span class="status-text">VIA Rank</span>
-                        <span class="status-value">Starter</span>
-                    </div>
-                    <div class="status-item">
-                        <div class="status-icon">💰</div>
-                        <span class="status-text">Eco Wallet</span>
-                        <span class="status-value">Active</span>
-                    </div>
-                </div>
+            <!-- Basic -->
+            <div class="price-card">
+                <div class="card-name">Via Basic</div>
+                <div class="card-tagline">Entry to the ecosystem</div>
 
                 <div class="card-price">
-                    <span class="price-currency">$</span>
-                    <span class="price-amount">9</span>
-                    <span class="price-period">/ month</span>
+                    <div class="price-amount">500/=</div>
+                    <div class="price-period">/month</div>
                 </div>
 
-                <a href="/create-account?plan=basic" class="btn-join" id="join-basic">
-                    Join Basic
-                </a>
+                <ul class="features-list">
+                    <li>Educational content access</li>
+                    <li>Community forums</li>
+                    <li>Weekly insights</li>
+                </ul>
 
-                <p class="best-for">Best for beginners starting their wealth journey</p>
+                <a href="/create-account?plan=basic" class="btn-join" id="join-basic">Get Started</a>
             </div>
 
-            <!-- ── CORE (highlighted) ── -->
-            <div class="plan-card core">
-                <div class="popular-badge">Most Popular</div>
+            <!-- Core — Featured -->
+            <div class="price-card featured">
+                <div class="card-name">Via Core</div>
+                <div class="card-tagline">Tools and guidance</div>
 
-                <div class="card-tier">Core</div>
-                <div class="card-tier-sub">Momentum</div>
+                <div class="card-price">
+                    <div class="price-amount">1,200/=</div>
+                    <div class="price-period">/month</div>
+                </div>
 
                 <ul class="features-list">
                     <li>Everything in Basic</li>
-                    <li>Leaderboard ranking</li>
-                    <li>Public VIA profile</li>
-                    <li>Advanced wallet tools</li>
-                    <li>Investment features</li>
+                    <li>Curated opportunities</li>
+                    <li>Group mentorship sessions</li>
+                    <li>Product guidance</li>
                 </ul>
 
-                <div class="card-divider"></div>
-
-                <!-- Status preview -->
-                <div class="status-preview">
-                    <div class="status-label">Your future status</div>
-                    <div class="status-item">
-                        <div class="status-icon">⚡</div>
-                        <span class="status-text">VIA Rank</span>
-                        <span class="status-value">Core Member</span>
-                    </div>
-                    <div class="status-item">
-                        <div class="status-icon">🏆</div>
-                        <span class="status-text">Leaderboard</span>
-                        <span class="status-value">Visible</span>
-                    </div>
-                    <div class="status-item">
-                        <div class="status-icon">🌐</div>
-                        <span class="status-text">Public Profile</span>
-                        <span class="status-value">Active</span>
-                    </div>
-                </div>
-
-                <div class="card-price">
-                    <span class="price-currency">$</span>
-                    <span class="price-amount">24</span>
-                    <span class="price-period">/ month</span>
-                </div>
-
-                <a href="/create-account?plan=core" class="btn-join" id="join-core">
-                    Join Core
-                </a>
-
-                <p class="best-for">Most popular choice</p>
+                <a href="/create-account?plan=core" class="btn-join" id="join-core">Get Started</a>
             </div>
 
-            <!-- ── CIRCLE ── -->
-            <div class="plan-card circle">
-                <div class="card-tier">Circle</div>
-                <div class="card-tier-sub">Elite</div>
+            <!-- Circle -->
+            <div class="price-card">
+                <div class="card-name">Via Circle</div>
+                <div class="card-tagline">Personal mentorship</div>
+
+                <div class="card-price">
+                    <div class="price-amount">15,000/=</div>
+                    <div class="price-period">/month</div>
+                </div>
 
                 <ul class="features-list">
                     <li>Everything in Core</li>
-                    <li>Private community access</li>
-                    <li>Exclusive opportunities</li>
-                    <li>Higher status in VIA ecosystem</li>
+                    <li>One-on-one mentorship</li>
+                    <li>Career guidance</li>
+                    <li>Equity participation</li>
                 </ul>
 
-                <div class="card-divider"></div>
-
-                <!-- Status preview -->
-                <div class="status-preview">
-                    <div class="status-label">Your future status</div>
-                    <div class="status-item">
-                        <div class="status-icon">👑</div>
-                        <span class="status-text">VIA Rank</span>
-                        <span class="status-value">Circle Elite</span>
-                    </div>
-                    <div class="status-item">
-                        <div class="status-icon">🔒</div>
-                        <span class="status-text">Private Circle</span>
-                        <span class="status-value">Unlocked</span>
-                    </div>
-                    <div class="status-item">
-                        <div class="status-icon">💎</div>
-                        <span class="status-text">Opportunities</span>
-                        <span class="status-value">Exclusive</span>
-                    </div>
-                </div>
-
-                <div class="card-price">
-                    <span class="price-currency">$</span>
-                    <span class="price-amount">49</span>
-                    <span class="price-period">/ month</span>
-                </div>
-
-                <a href="/create-account?plan=circle" class="btn-join" id="join-circle">
-                    Join Circle
-                </a>
-
-                <p class="best-for">For committed wealth builders</p>
+                <a href="/create-account?plan=circle" class="btn-join" id="join-circle">Get Started</a>
             </div>
 
-        </div><!-- /cards-grid -->
+        </div><!-- /pricing-grid -->
 
         <p class="page-footer">Cancel anytime. No lock-in contracts.</p>
 
