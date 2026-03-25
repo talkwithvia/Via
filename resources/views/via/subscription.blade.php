@@ -326,7 +326,7 @@
         <div class="nav-center">
             <a href="/subscribe" style="color:var(--slate);font-weight:500;">Explore Opportunities</a>
             <a href="#">Store</a>
-            <a href="#">Mentorship</a>
+            <a href="#">Community</a>
             <a href="#">Blog</a>
             <span style="display:flex;align-items:center;gap:0.5rem;">
                 <a href="#">Events</a>
@@ -405,7 +405,7 @@
                 <ul class="features-list">
                     <li>Everything in Basic</li>
                     <li>Curated opportunities</li>
-                    <li>Group mentorship sessions</li>
+                    <li>Group community sessions</li>
                     <li>Product guidance</li>
                 </ul>
 
@@ -415,7 +415,7 @@
             <!-- Circle -->
             <div class="price-card">
                 <div class="card-name">Via Circle</div>
-                <div class="card-tagline">Personal mentorship</div>
+                <div class="card-tagline">Personal community</div>
 
                 <div class="card-price">
                     <div class="price-amount">15,000/=</div>
@@ -424,7 +424,7 @@
 
                 <ul class="features-list">
                     <li>Everything in Core</li>
-                    <li>One-on-one mentorship</li>
+                    <li>One-on-one community</li>
                     <li>Career guidance</li>
                     <li>Equity participation</li>
                 </ul>

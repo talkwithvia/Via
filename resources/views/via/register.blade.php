@@ -393,7 +393,7 @@
         <div class="nav-center">
             <a href="/subscribe">Explore Opportunities</a>
             <a href="#">Store</a>
-            <a href="#">Mentorship</a>
+            <a href="#">Community</a>
             <a href="#">Blog</a>
             <span style="display:flex;align-items:center;gap:0.5rem;">
                 <a href="#">Events</a>

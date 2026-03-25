@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'plan',    // Via Basic | Via Core | Via Circle
+        'status',  // Active | Inactive
     ];
 
     /**
