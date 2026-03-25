@@ -8,6 +8,21 @@
 
 VIA is a personal growth and wealth-ecosystem platform. The design language is calm and high-end: cream backgrounds, terracotta (`#B2734D`) accents, serif typography (Cormorant Garamond), and a clean top navigation. The experience communicates clarity and purpose, not urgency.
 
+## ✦ Interface Preview
+
+<div align="center">
+  <img src="docs/screenshots/splash.png" width="800" alt="VIA Splash Page">
+</div>
+
+*The Landing/Splash experience focusing on the "Learn / Do / Grow" pillars.*
+
+<div align="center">
+  <img src="docs/screenshots/subscription.png" width="400" alt="VIA Subscription Selection">
+  <img src="docs/screenshots/register.png" width="400" alt="VIA Registration Form">
+</div>
+
+*Clean and elegant subscription selection and account creation flows.*
+
 ---
 
 ## ✦ Site Structure
@@ -71,7 +86,7 @@ The splash (`/`) is a full landing page, not just a cinematic intro. It contains
 
 | Section | Description |
 |---------|-------------|
-| **Navbar** | Sticky; links to Explore Opportunities, Store, Mentorship, Blog, Events (coming soon), Cart, Login |
+| **Navbar** | Sticky; links to Explore Opportunities, Store, Community, Blog, Events (coming soon), Cart, Login |
 | **Hero** | Full-screen photographic hero with italic Cormorant title *"VIVA LA VIA"* and terracotta CTA |
 | **VIA Is Not A Product** | Brand statement + three pillars: Learn / Do / Grow |
 | **Your Journey** | Four-step progression: Discover → Engage → Build → Grow |
@@ -87,8 +102,8 @@ Prices are in Kenyan Shillings (KES).
 | Tier | Price | Tagline | Highlights |
 |------|-------|---------|------------|
 | **Via Basic** | KES 500 / mo | Entry to the ecosystem | Educational content, community forums, weekly insights |
-| **Via Core** ⭐ | KES 1,200 / mo | Tools and guidance | Everything in Basic + curated opportunities, group mentorship, product guidance |
-| **Via Circle** | KES 15,000 / mo | Personal mentorship | Everything in Core + 1-on-1 mentorship, career guidance, equity participation |
+| **Via Core** ⭐ | KES 1,200 / mo | Tools and guidance | Everything in Basic + curated opportunities, group community, product guidance |
+| **Via Circle** | KES 15,000 / mo | Personal community | Everything in Core + 1-on-1 community, career guidance, equity participation |
 
 ---
 
