@@ -34,8 +34,13 @@ Route::middleware('auth')->group(function () {
 Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
 Route::post('/admin/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
 Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+Route::delete('/admin/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
 Route::post('/admin/products', [AdminController::class, 'storeProduct'])->name('admin.products.store');
-Route::put('/admin/products/{id}', [AdminController::class, 'updateProduct'])->name('admin.products.update');
+Route::post('/admin/products/{id}', [AdminController::class, 'updateProduct'])->name('admin.products.update');
+Route::delete('/admin/products/{id}', [AdminController::class, 'destroyProduct'])->name('admin.products.destroy');
+Route::post('/admin/categories', [AdminController::class, 'storeCategory'])->name('admin.categories.store');
+Route::post('/admin/categories/{id}', [AdminController::class, 'updateCategory'])->name('admin.categories.update');
+Route::delete('/admin/categories/{id}', [AdminController::class, 'destroyCategory'])->name('admin.categories.destroy');
 Route::post('/admin/subscriptions/{id}', [AdminController::class, 'updateSubscription'])->name('admin.subscriptions.update');
 
 require __DIR__.'/auth.php';

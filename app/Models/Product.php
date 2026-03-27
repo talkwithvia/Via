@@ -13,6 +13,7 @@ class Product extends Model
     protected $fillable = [
         'name',
         'description',
+        'image_path',   // Relative path to uploaded product image
         'price',
         'category',
         'stock',

@@ -786,6 +786,13 @@
                 Subscriptions
             </button>
 
+            <button class="nav-item" onclick="switchTab('categories', this)" id="nav-categories">
+                <svg fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/>
+                </svg>
+                Categories
+            </button>
+
             <span class="nav-section-label">Insights</span>
 
             <button class="nav-item" onclick="switchTab('analytics', this)" id="nav-analytics">
@@ -856,15 +863,16 @@
                         <tr>
                             <td class="td-name">{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
-                            <td><span class="badge badge-plan">{{ $user->plan ?? 'Basic' }}</span></td>
+                            <td><span class="badge badge-plan">{{ $user->subscription->name ?? 'None' }}</span></td>
                             <td>{{ $user->created_at ? $user->created_at->format('M d, Y') : '—' }}</td>
                             <td>
                                 <span class="badge {{ ($user->status ?? 'Active') === 'Active' ? 'badge-active' : 'badge-inactive' }}">
                                     {{ $user->status ?? 'Active' }}
                                 </span>
                             </td>
-                            <td style="text-align:right">
+                            <td style="text-align:right; display:flex; gap:0.5rem; justify-content:flex-end;">
                                 <button type="button" class="btn-outline" style="padding:0.3rem 0.6rem;font-size:0.7rem;" onclick="openEditUserModal({{ json_encode($user) }})">Edit</button>
+                                <button type="button" class="btn-outline" style="padding:0.3rem 0.6rem;font-size:0.7rem;color:var(--danger);border-color:rgba(185,28,28,0.2);" onclick="deleteItem('{{ route('admin.users.destroy', $user->id) }}', 'Delete user &ldquo;{{ addslashes($user->name) }}&rdquo;? This cannot be undone.')">Delete</button>
                             </td>
                         </tr>
                         @endforeach
@@ -891,15 +899,30 @@
             <div class="product-grid">
                 @foreach($products as $product)
                 <div class="product-card">
-                    <div class="product-card-category">{{ $product->category }}</div>
-                    <div class="product-card-name">{{ $product->name }}</div>
-                    <div class="product-card-price"><strong>{{ $product->price }}/=</strong></div>
-                    <div class="product-card-meta">
-                        <div>
-                            <span class="badge {{ $product->status === 'Active' ? 'badge-active' : 'badge-inactive' }}">{{ $product->status }}</span>
-                            <span style="margin-left:0.5rem;">{{ $product->stock }} in stock</span>
+                    {{-- Product thumbnail --}}
+                    @if($product->image_path)
+                        <div style="aspect-ratio:4/3;overflow:hidden;border-bottom:1px solid var(--border);">
+                            <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}" style="width:100%;height:100%;object-fit:cover;">
                         </div>
-                        <button type="button" class="btn-outline" style="padding:0.25rem 0.5rem;font-size:0.7rem;border-color:transparent;" onclick="openEditProductModal({{ json_encode($product) }})">Edit</button>
+                    @else
+                        <div style="aspect-ratio:4/3;background:linear-gradient(135deg,var(--cream-dark),#e8e3db);display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);">
+                            <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="#aaa" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                        </div>
+                    @endif
+                    <div style="padding:0.9rem;">
+                        <div class="product-card-category">{{ $product->category }}</div>
+                        <div class="product-card-name">{{ $product->name }}</div>
+                        <div class="product-card-price"><strong>{{ $product->price }}/=</strong></div>
+                        <div class="product-card-meta">
+                            <div>
+                                <span class="badge {{ $product->status === 'Active' ? 'badge-active' : 'badge-inactive' }}">{{ $product->status }}</span>
+                                <span style="margin-left:0.5rem;font-size:0.75rem;color:var(--muted);">{{ $product->stock }} in stock</span>
+                            </div>
+                            <div style="display:flex; gap:0.25rem;margin-top:0.5rem;">
+                                <button type="button" class="btn-outline" style="padding:0.25rem 0.5rem;font-size:0.7rem;border-color:transparent;" onclick="openEditProductModal({{ json_encode($product) }})">Edit</button>
+                                <button type="button" class="btn-outline" style="padding:0.25rem 0.5rem;font-size:0.7rem;color:var(--danger);border-color:transparent;" onclick="deleteItem('{{ route('admin.products.destroy', $product->id) }}', 'Delete &ldquo;{{ addslashes($product->name) }}&rdquo;? This cannot be undone.')">Del</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 @endforeach
@@ -979,6 +1002,50 @@
         </div>
 
         {{-- ════════════════════════════════════════ --}}
+        {{--  TAB: CATEGORIES                        --}}
+        {{-- ════════════════════════════════════════ --}}
+        <div class="tab-panel" id="tab-categories">
+            <div class="section-header">
+                <div>
+                    <div class="section-title">Product Categories</div>
+                    <div class="section-subtitle">{{ count($categories) }} categories — used to filter products on the store</div>
+                </div>
+                <button class="btn-primary" onclick="openModal('addCategoryModal')">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Add Category
+                </button>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category Name</th>
+                            <th>Description</th>
+                            <th>Products</th>
+                            <th style="text-align:right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($categories as $cat)
+                        <tr>
+                            <td class="td-name">{{ $cat->name }}</td>
+                            <td style="color:var(--muted);font-size:0.82rem;">{{ $cat->description ?? '—' }}</td>
+                            <td>{{ $cat->products()->count() }}</td>
+                            <td style="text-align:right;">
+                                <div style="display:flex;gap:0.5rem;justify-content:flex-end;">
+                                    <button type="button" class="btn-outline" style="padding:0.3rem 0.6rem;font-size:0.7rem;" onclick="openEditCategoryModal({{ json_encode($cat) }})">Edit</button>
+                                    <button type="button" class="btn-outline" style="padding:0.3rem 0.6rem;font-size:0.7rem;color:var(--danger);border-color:rgba(185,28,28,0.2);" onclick="deleteItem('{{ route('admin.categories.destroy', $cat->id) }}', 'Delete category &ldquo;{{ addslashes($cat->name) }}&rdquo;? Products in this category will not be deleted.')">Delete</button>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">No categories yet. Add one above.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
         {{--  TAB: ANALYTICS                         --}}
         {{-- ════════════════════════════════════════ --}}
         <div class="tab-panel" id="tab-analytics">
@@ -992,12 +1059,8 @@
             {{-- Stat chips --}}
             @php
                 $totalUsers  = $users->count();
-                $activeSubs  = $users->where('status', 'Active')->count();
-                $planPrices  = ['Basic' => 500, 'Core' => 1200, 'Circle' => 15000];
-                $mrr = $users->where('status','Active')->sum(fn($u) => $planPrices[$u->plan] ?? 0);
-                $basicCount  = $users->where('plan','Basic')->count();
-                $coreCount   = $users->where('plan','Core')->count();
-                $circleCount = $users->where('plan','Circle')->count();
+                $activeSubs  = $users->where('status', 'Active')->whereNotNull('subscription_id')->count();
+                $mrr = $users->where('status','Active')->sum(fn($u) => (int)str_replace(',', '', $u->subscription->price ?? '0'));
             @endphp
 
             <div class="stats-row">
@@ -1057,19 +1120,21 @@
                     <div class="chart-title">Plan Distribution</div>
                     @php
                         $total = max($totalUsers, 1);
-                        $plans = [
-                            ['name' => 'Via Circle', 'count' => $circleCount, 'class' => ''],
-                            ['name' => 'Via Core',   'count' => $coreCount,   'class' => 'light'],
-                            ['name' => 'Via Basic',  'count' => $basicCount,  'class' => 'lighter'],
-                        ];
+                        $classes = ['', 'light', 'lighter'];
+                        $planStats = [];
                     @endphp
                     <div class="plan-dist">
-                        @foreach($plans as $plan)
-                        @php $pct = round(($plan['count'] / $total) * 100); @endphp
+                        @foreach($subscriptions as $idx => $sub)
+                        @php 
+                            $count = $users->where('subscription_id', $sub->id)->count();
+                            $pct = round(($count / $total) * 100); 
+                            $rev = $count * (int)str_replace(',', '', $sub->price);
+                            $planStats[] = ['name' => $sub->name, 'rev' => $rev];
+                        @endphp
                         <div class="plan-row">
-                            <span class="plan-row-label">{{ $plan['name'] }}</span>
+                            <span class="plan-row-label">{{ $sub->name }}</span>
                             <div class="plan-bar-track">
-                                <div class="plan-bar-fill {{ $plan['class'] }}" style="width: {{ $pct }}%;"></div>
+                                <div class="plan-bar-fill {{ $classes[$idx % 3] }}" style="width: {{ $pct }}%;"></div>
                             </div>
                             <span class="plan-row-pct">{{ $pct }}%</span>
                         </div>
@@ -1079,10 +1144,10 @@
                     {{-- Revenue breakdown --}}
                     <div style="margin-top:1.5rem;border-top:1px solid var(--border);padding-top:1.2rem;">
                         <div class="chart-title" style="font-size:1rem;margin-bottom:0.8rem;">Revenue by Plan</div>
-                        @foreach([['Via Circle', $circleCount * 15000], ['Via Core', $coreCount * 1200], ['Via Basic', $basicCount * 500]] as [$pname, $rev])
+                        @foreach($planStats as $stat)
                         <div style="display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;border-bottom:1px solid rgba(222,224,228,0.4);font-size:0.82rem;">
-                            <span style="color:var(--slate-mid);">{{ $pname }}</span>
-                            <span style="font-weight:500;color:var(--slate);">{{ number_format($rev) }}/=</span>
+                            <span style="color:var(--slate-mid);">{{ $stat['name'] }}</span>
+                            <span style="font-weight:500;color:var(--slate);">{{ number_format($stat['rev']) }}/=</span>
                         </div>
                         @endforeach
                     </div>
@@ -1107,9 +1172,9 @@
                             @foreach($users->take(5) as $u)
                             <tr>
                                 <td class="td-name">{{ $u->name }}</td>
-                                <td><span class="badge badge-plan">{{ $u->plan ?? 'Basic' }}</span></td>
+                                <td><span class="badge badge-plan">{{ $u->subscription->name ?? 'None' }}</span></td>
                                 <td>{{ $u->created_at ? $u->created_at->format('M d, Y') : '—' }}</td>
-                                <td style="color:var(--terra);font-weight:500;">{{ number_format($planPrices[$u->plan] ?? 0) }}/=</td>
+                                <td style="color:var(--terra);font-weight:500;">{{ number_format((int)str_replace(',', '', $u->subscription->price ?? '0')) }}/=</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -1121,6 +1186,33 @@
 
     </div>{{-- /main --}}
 
+
+    {{-- ════════════════════════════════════════════════════════════════ --}}
+    {{-- SHARED: Hidden delete form — used by all deleteItem() calls     --}}
+    {{-- ════════════════════════════════════════════════════════════════ --}}
+    <form id="deleteForm" method="POST" action="" style="display:none;">
+        @csrf
+        @method('DELETE')
+    </form>
+
+    {{-- ════════════════════════════════════════ --}}
+    {{--  MODAL: Delete Confirmation             --}}
+    {{-- ════════════════════════════════════════ --}}
+    <div class="modal-backdrop" id="deleteConfirmModal">
+        <div class="modal" style="max-width:420px;">
+            <div class="modal-header" style="border-bottom:none;padding-bottom:0;">
+                <span class="modal-title" style="color:var(--danger);">⚠ Confirm Delete</span>
+                <button class="modal-close" onclick="closeDeleteModal()">✕</button>
+            </div>
+            <div style="padding:1rem 2rem 0.5rem;font-size:0.88rem;color:var(--muted);line-height:1.6;" id="deleteConfirmMsg">
+                Are you sure? This action cannot be undone.
+            </div>
+            <div style="display:flex;gap:0.7rem;padding:1.25rem 2rem 1.75rem;">
+                <button type="button" class="btn-outline" onclick="closeDeleteModal()" style="flex:1;">Cancel</button>
+                <button type="button" onclick="submitDelete()" style="flex:1;background:var(--danger);color:#fff;border:none;border-radius:8px;padding:0.7rem 1rem;font-size:0.85rem;font-weight:500;cursor:pointer;">Yes, Delete</button>
+            </div>
+        </div>
+    </div>
 
     {{-- ════════════════════════════════════════ --}}
     {{--  MODAL: Add User                        --}}
@@ -1161,11 +1253,11 @@
                 </div>
                 <div class="field-wrap">
                     <label class="field-label">Membership Plan</label>
-                    <select class="field-select" name="plan" required>
+                    <select class="field-select" name="subscription_id" required>
                         <option value="">Select a plan</option>
-                        <option value="Basic" {{ old('plan') === 'Basic' ? 'selected' : '' }}>Via Basic — 500/=</option>
-                        <option value="Core"  {{ old('plan') === 'Core'  ? 'selected' : '' }}>Via Core — 1,200/=</option>
-                        <option value="Circle"{{ old('plan') === 'Circle'? 'selected' : '' }}>Via Circle — 15,000/=</option>
+                        @foreach($subscriptions as $sub)
+                            <option value="{{ $sub->id }}" {{ old('subscription_id') == $sub->id ? 'selected' : '' }}>{{ $sub->name }} — {{ $sub->price }}/=</option>
+                        @endforeach
                     </select>
                 </div>
                 <div style="display:flex;gap:0.7rem;margin-top:1.25rem;">
@@ -1182,39 +1274,46 @@
     <div class="modal-backdrop" id="addProductModal" onclick="closeModalOnBackdrop(event, 'addProductModal')">
         <div class="modal">
             <div class="modal-header">
-                <span class="modal-title">Add Store Product</span>
+                <span class="modal-title">Add BFSUMA Product</span>
                 <button class="modal-close" onclick="closeModal('addProductModal')">✕</button>
             </div>
-            <form method="POST" action="{{ route('admin.products.store') }}">
+            {{-- enctype required for file upload --}}
+            <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="field-wrap">
                     <label class="field-label">Product Name</label>
-                    <input class="field-input" type="text" name="name" placeholder="e.g. Via Notebook" required>
+                    <input class="field-input" type="text" name="name" placeholder="e.g. BFSUMA Moringa Capsules" required>
+                </div>
+                <div class="field-wrap">
+                    <label class="field-label">Product Image</label>
+                    <input class="field-input" type="file" name="image" accept="image/*" style="padding:0.5rem;">
+                    <small style="color:var(--muted);font-size:0.75rem;">JPG, PNG or WebP · Max 4MB</small>
+                </div>
+                <div class="field-wrap">
+                    <label class="field-label">Description</label>
+                    <textarea class="field-textarea" name="description" placeholder="What does this product do? Benefits, ingredients, usage…"></textarea>
                 </div>
                 <div class="form-row">
                     <div class="field-wrap">
-                        <label class="field-label">Price (e.g. 850)</label>
-                        <input class="field-input" type="text" name="price" placeholder="850" required>
+                        <label class="field-label">Price (KES, e.g. 1,500)</label>
+                        <input class="field-input" type="text" name="price" placeholder="1,500" required>
                     </div>
                     <div class="field-wrap">
                         <label class="field-label">Stock Qty</label>
-                        <input class="field-input" type="number" name="stock" placeholder="20" min="0" required>
+                        <input class="field-input" type="number" name="stock" placeholder="50" min="0" required>
                     </div>
                 </div>
                 <div class="field-wrap" style="margin-top:1rem;">
                     <label class="field-label">Category</label>
                     <select class="field-select" name="category" required>
-                        <option value="">Select category</option>
-                        <option value="Stationery">Stationery</option>
-                        <option value="Apparel">Apparel</option>
-                        <option value="Service">Service</option>
-                        <option value="Digital">Digital</option>
-                        <option value="Other">Other</option>
+                        <option value="">Select a category</option>
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat->name }}">{{ $cat->name }}</option>
+                        @endforeach
+                        @if($categories->isEmpty())
+                            <option value="" disabled>— Add a category first —</option>
+                        @endif
                     </select>
-                </div>
-                <div class="field-wrap">
-                    <label class="field-label">Description (Optional)</label>
-                    <textarea class="field-textarea" name="description" placeholder="A short description of the product..."></textarea>
                 </div>
                 <div style="display:flex;gap:0.7rem;margin-top:1.25rem;">
                     <button type="submit" class="btn-primary" style="flex:1;">Add Product</button>
@@ -1257,10 +1356,10 @@
                 <div class="form-row">
                     <div class="field-wrap">
                         <label class="field-label">Membership Plan</label>
-                        <select class="field-select" name="plan" id="editUserPlan" required>
-                            <option value="Basic">Via Basic — 500/=</option>
-                            <option value="Core">Via Core — 1,200/=</option>
-                            <option value="Circle">Via Circle — 15,000/=</option>
+                        <select class="field-select" name="subscription_id" id="editUserPlan" required>
+                            @foreach($subscriptions as $sub)
+                                <option value="{{ $sub->id }}">{{ $sub->name }} — {{ $sub->price }}/=</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="field-wrap">
@@ -1285,19 +1384,28 @@
     <div class="modal-backdrop" id="editProductModal" onclick="closeModalOnBackdrop(event, 'editProductModal')">
         <div class="modal">
             <div class="modal-header">
-                <span class="modal-title">Edit Store Product</span>
+                <span class="modal-title">Edit BFSUMA Product</span>
                 <button class="modal-close" onclick="closeModal('editProductModal')">✕</button>
             </div>
-            <form id="editProductForm" method="POST" action="">
+            {{-- POST with _method override and enctype for file upload --}}
+            <form id="editProductForm" method="POST" action="" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
                 <div class="field-wrap">
                     <label class="field-label">Product Name</label>
                     <input class="field-input" type="text" name="name" id="editProductName" required>
                 </div>
+                <div class="field-wrap">
+                    <label class="field-label">Replace Image (leave blank to keep current)</label>
+                    <input class="field-input" type="file" name="image" accept="image/*" style="padding:0.5rem;">
+                    <small style="color:var(--muted);font-size:0.75rem;">Current image will be used if nothing is uploaded</small>
+                </div>
+                <div class="field-wrap">
+                    <label class="field-label">Description</label>
+                    <textarea class="field-textarea" name="description" id="editProductDescription" placeholder="Product description…"></textarea>
+                </div>
                 <div class="form-row">
                     <div class="field-wrap">
-                        <label class="field-label">Price</label>
+                        <label class="field-label">Price (KES)</label>
                         <input class="field-input" type="text" name="price" id="editProductPrice" required>
                     </div>
                     <div class="field-wrap">
@@ -1309,11 +1417,9 @@
                     <div class="field-wrap">
                         <label class="field-label">Category</label>
                         <select class="field-select" name="category" id="editProductCategory" required>
-                            <option value="Stationery">Stationery</option>
-                            <option value="Apparel">Apparel</option>
-                            <option value="Service">Service</option>
-                            <option value="Digital">Digital</option>
-                            <option value="Other">Other</option>
+                            @foreach($categories as $cat)
+                                <option value="{{ $cat->name }}">{{ $cat->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="field-wrap">
@@ -1324,13 +1430,63 @@
                         </select>
                     </div>
                 </div>
-                <div class="field-wrap">
-                    <label class="field-label">Description (Optional)</label>
-                    <textarea class="field-textarea" name="description" id="editProductDescription" placeholder="A short description of the product..."></textarea>
-                </div>
                 <div style="display:flex;gap:0.7rem;margin-top:1.25rem;">
                     <button type="submit" class="btn-primary" style="flex:1;">Save Changes</button>
                     <button type="button" class="btn-outline" onclick="closeModal('editProductModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- ════════════════════════════════════════ --}}
+    {{--  MODAL: Add Category                    --}}
+    {{-- ════════════════════════════════════════ --}}
+    <div class="modal-backdrop" id="addCategoryModal" onclick="closeModalOnBackdrop(event, 'addCategoryModal')">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Add Category</span>
+                <button class="modal-close" onclick="closeModal('addCategoryModal')">✕</button>
+            </div>
+            <form method="POST" action="{{ route('admin.categories.store') }}">
+                @csrf
+                <div class="field-wrap">
+                    <label class="field-label">Category Name</label>
+                    <input class="field-input" type="text" name="name" placeholder="e.g. Herbal Supplements" required>
+                </div>
+                <div class="field-wrap">
+                    <label class="field-label">Description (Optional)</label>
+                    <input class="field-input" type="text" name="description" placeholder="Short description for this category">
+                </div>
+                <div style="display:flex;gap:0.7rem;margin-top:1.25rem;">
+                    <button type="submit" class="btn-primary" style="flex:1;">Add Category</button>
+                    <button type="button" class="btn-outline" onclick="closeModal('addCategoryModal')">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- ════════════════════════════════════════ --}}
+    {{--  MODAL: Edit Category                   --}}
+    {{-- ════════════════════════════════════════ --}}
+    <div class="modal-backdrop" id="editCategoryModal" onclick="closeModalOnBackdrop(event, 'editCategoryModal')">
+        <div class="modal">
+            <div class="modal-header">
+                <span class="modal-title">Edit Category</span>
+                <button class="modal-close" onclick="closeModal('editCategoryModal')">✕</button>
+            </div>
+            <form id="editCategoryForm" method="POST" action="">
+                @csrf
+                <div class="field-wrap">
+                    <label class="field-label">Category Name</label>
+                    <input class="field-input" type="text" name="name" id="editCategoryName" required>
+                </div>
+                <div class="field-wrap">
+                    <label class="field-label">Description (Optional)</label>
+                    <input class="field-input" type="text" name="description" id="editCategoryDescription">
+                </div>
+                <div style="display:flex;gap:0.7rem;margin-top:1.25rem;">
+                    <button type="submit" class="btn-primary" style="flex:1;">Save Changes</button>
+                    <button type="button" class="btn-outline" onclick="closeModal('editCategoryModal')">Cancel</button>
                 </div>
             </form>
         </div>
@@ -1342,6 +1498,7 @@
             users: 'Users',
             products: 'Store Products',
             subscriptions: 'Subscriptions',
+            categories: 'Categories',
             analytics: 'Analytics'
         };
 
@@ -1382,7 +1539,7 @@
             document.getElementById('editUserForm').action = '/admin/users/' + user.id;
             document.getElementById('editUserName').value = user.name || '';
             document.getElementById('editUserEmail').value = user.email || '';
-            document.getElementById('editUserPlan').value = user.plan || 'Basic';
+            document.getElementById('editUserPlan').value = user.subscription_id || '';
             document.getElementById('editUserStatus').value = user.status || 'Active';
             openModal('editUserModal');
         }
@@ -1392,10 +1549,40 @@
             document.getElementById('editProductName').value = product.name || '';
             document.getElementById('editProductPrice').value = product.price || '';
             document.getElementById('editProductStock').value = product.stock || 0;
-            document.getElementById('editProductCategory').value = product.category || 'Stationery';
+            document.getElementById('editProductCategory').value = product.category || '';
             document.getElementById('editProductStatus').value = product.status || 'Active';
             document.getElementById('editProductDescription').value = product.description || '';
             openModal('editProductModal');
+        }
+
+        function openEditCategoryModal(cat) {
+            document.getElementById('editCategoryForm').action = '/admin/categories/' + cat.id;
+            document.getElementById('editCategoryName').value = cat.name || '';
+            document.getElementById('editCategoryDescription').value = cat.description || '';
+            openModal('editCategoryModal');
+        }
+
+        // ── Delete Confirmation (shared) ───────────────────────────────
+        // Call this from any Delete button. It opens the confirmation modal
+        // and, if the user confirms, submits the hidden #deleteForm via DELETE.
+        function deleteItem(url, message) {
+            // Set the hidden form's action to the delete endpoint
+            document.getElementById('deleteForm').action = url;
+            // Show the contextual message in the modal
+            document.getElementById('deleteConfirmMsg').innerHTML = message;
+            // Open the confirmation modal
+            document.getElementById('deleteConfirmModal').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteConfirmModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        function submitDelete() {
+            // Submit the shared hidden DELETE form
+            document.getElementById('deleteForm').submit();
         }
 
         // ── Auto-open correct tab if redirected back with ?tab= ────────

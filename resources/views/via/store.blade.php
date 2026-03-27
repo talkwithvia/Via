@@ -743,7 +743,7 @@
     <div class="store-hero">
         <p class="store-eyebrow">BFSUMA × VIA</p>
         <h1 class="store-title">The Store</h1>
-        <p class="store-sub">Curated tools, resources, and products to support your journey forward.</p>
+        <p class="store-sub">Medicinal products, wellness solutions and natural remedies curated by BFSUMA.</p>
     </div>
 
     <!-- ── Store Layout ── -->
@@ -811,9 +811,8 @@
                                 {!! $iconPath !!}
                             </svg>
                             <span class="product-cat-pill">{{ $product->category }}</span>
-                            @if($product->stock <= 10 && $product->stock > 0)
-                                <span class="product-stock-pill">{{ $product->stock }} left</span>
-                            @elseif($product->stock === 0)
+                            {{-- Only show 'Sold Out' badge — never reveal stock count to users --}}
+                            @if($product->stock === 0)
                                 <span class="product-stock-pill" style="background:rgba(185,28,28,0.1);color:#b91c1c;border-color:rgba(185,28,28,0.2);">Sold out</span>
                             @endif
                         </div>

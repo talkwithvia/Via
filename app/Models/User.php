@@ -22,9 +22,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'plan',    // Via Basic | Via Core | Via Circle
+        'subscription_id',
         'status',  // Active | Inactive
     ];
+
+    public function subscription()
+    {
+        return $this->belongsTo(Subscription::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
