@@ -122,7 +122,7 @@ Prices are in Kenyan Shillings (KES).
 ### Prerequisites
 - PHP ≥ 8.1
 - Composer
-- PostgreSQL (via Supabase)
+- MYSQL
 
 ### Install & Run
 
