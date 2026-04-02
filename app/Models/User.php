@@ -22,8 +22,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'provider',
+        'provider_id',
+        'provider_token',
         'subscription_id',
-        'status',  // Active | Inactive
+        'status',
     ];
 
     public function subscription()

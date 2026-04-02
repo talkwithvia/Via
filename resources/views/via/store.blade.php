@@ -807,9 +807,13 @@
                                 ];
                                 $iconPath = $icons[$product->category] ?? '<circle cx="12" cy="12" r="10"/>';
                             @endphp
-                            <svg class="product-image-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                                {!! $iconPath !!}
-                            </svg>
+                            @if($product->image_path)
+                                <img src="{{ asset('storage/' . $product->image_path) }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            @else
+                                <svg class="product-image-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                    {!! $iconPath !!}
+                                </svg>
+                            @endif
                             <span class="product-cat-pill">{{ $product->category }}</span>
                             {{-- Only show 'Sold Out' badge — never reveal stock count to users --}}
                             @if($product->stock === 0)
@@ -1017,7 +1021,7 @@
             renderCart();
             updateCartBadge();
             closeCart();
-            showToast('🎉 Order placed! We'll be in touch.', 3500);
+            showToast('🎉 Order placed! We\'ll be in touch.', 3500);
         }
 
         // ── Toast ─────────────────────────────────────────────────────

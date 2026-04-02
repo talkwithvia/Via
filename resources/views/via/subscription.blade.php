@@ -325,7 +325,7 @@
         <a href="/" class="nav-logo">V I A</a>
         <div class="nav-center">
             <a href="/subscribe" style="color:var(--slate);font-weight:500;">Explore Opportunities</a>
-            <a href="#">Store</a>
+            <a href="store">Store</a>
             <a href="#">Community</a>
             <a href="#">Blog</a>
             <span style="display:flex;align-items:center;gap:0.5rem;">

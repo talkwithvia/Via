@@ -525,7 +525,7 @@
 
         <div class="nav-center">
             <a href="/subscribe">Explore Opportunities</a>
-            <a href="#">Store</a>
+            <a href="/store">Store</a>
             <a href="#">Community</a>
             <a href="#">Blog</a>
             <span class="nav-badge">

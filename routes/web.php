@@ -13,9 +13,6 @@ Route::get('/subscribe', function () {
     return view('via.subscription');
 })->name('subscribe');
 
-Route::get('/login', function () {
-    return view('via.login');
-})->name('login.page');
 
 // ── Public Store ───────────────────────────────────────────────────────
 Route::get('/store', [StoreController::class, 'index'])->name('store.index');

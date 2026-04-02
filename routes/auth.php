@@ -12,6 +12,11 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+    Route::get('auth/{provider}/redirect', [App\Http\Controllers\Auth\SocialiteController::class, 'redirect'])
+        ->name('socialite.redirect');
+    
+    Route::get('auth/{provider}/callback', [App\Http\Controllers\Auth\SocialiteController::class, 'callback'])
+        ->name('socialite.callback');
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
