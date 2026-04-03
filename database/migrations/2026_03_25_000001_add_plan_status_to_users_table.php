@@ -16,7 +16,7 @@ return new class extends Migration
             // Membership plan: Basic, Core, or Circle
             $table->string('plan')->default('Basic')->after('email');
             // Account status: Active or Inactive
-            $table->string('status')->default('Active')->after('plan');
+            $table->boolean('status')->default(true)->after('plan');
         });
     }
 

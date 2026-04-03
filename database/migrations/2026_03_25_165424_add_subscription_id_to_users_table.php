@@ -14,10 +14,10 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('subscription_id')
-                  ->nullable()
-                  ->after('email')
-                  ->constrained('subscriptions')
-                  ->nullOnDelete();
+                ->nullable()
+                ->after('email')
+                ->constrained('subscriptions')
+                ->nullOnDelete();
         });
 
         // Migrate existing string plans to IDs
