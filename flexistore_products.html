@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--
+  FlexiStore – products.html (Product Listing / Shop Page)
+  Filter sidebar, sort, view toggle, product grid
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse all products in our store. Filter by category, price, and more.">
+  <title>Shop – FlexiStore</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%236366f1'/><text y='.9em' font-size='70' x='15'>F</text></svg>">
+
+  <style>
+    /* Stacked sidebar for mobile – slide in */
+    @media (max-width: 1023px) {
+      .filter-sidebar {
+        display: none;
+        position: fixed;
+        inset: 68px 0 0 0;
+        z-index: 900;
+        border-radius: 0;
+        overflow-y: auto;
+        height: calc(100vh - 68px);
+      }
+      .filter-sidebar.open { display: block; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar" id="navbar">
+  <div class="container">
+    <nav class="nav-inner">
+      <a class='nav-logo' href='/'>
+        <div class="nav-logo-icon">F</div>Your Store
+      </a>
+      <ul class="nav-links">
+        <li><a class='nav-link' href='/'>Home</a></li>
+        <li><a class='nav-link active' href='/products'>Shop</a></li>
+        <li><a class='nav-link' href='/product-detail'>Products</a></li>
+        <li><a class='nav-link' href='/about'>About</a></li>
+        <li><a class='nav-link' href='/contact'>Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-icon-btn" aria-label="Search">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+        </button>
+        <a aria-label='Cart' class='nav-icon-btn' href='/cart'>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/></svg>
+          <span class="cart-badge" id="cart-badge">0</span>
+        </a>
+        <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobile-menu">
+  <a class='nav-link' href='/'>Home</a>
+  <a class='nav-link' href='/products'>Shop</a>
+  <a class='nav-link' href='/product-detail'>Products</a>
+  <a class='nav-link' href='/about'>About</a>
+  <a class='nav-link' href='/contact'>Contact</a>
+</nav>
+
+<main class="page-body">
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="container">
+      <h1>Our Products</h1>
+      <p>Browse our full collection of premium products.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Breadcrumb -->
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href='/'>Home</a>
+        <span class="breadcrumb-sep">›</span>
+        <span>Shop</span>
+      </nav>
+
+      <!-- Mobile filter toggle -->
+      <div style="display:flex; justify-content:flex-end; margin-bottom:var(--space-4)" class="lg-hidden">
+        <button id="filter-toggle" class="btn btn-ghost" style="display:flex; align-items:center; gap:var(--space-2)">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/></svg>
+          Filters
+        </button>
+      </div>
+
+      <!-- Shop Layout -->
+      <div class="shop-layout">
+
+        <!-- ======= FILTER SIDEBAR ======= -->
+        <aside class="filter-sidebar" id="filter-sidebar" aria-label="Product filters">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--space-6)">
+            <h3 style="margin:0">Filters</h3>
+            <button onclick="clearFilters()" class="btn btn-ghost btn-sm">Clear All</button>
+          </div>
+
+          <!-- Category -->
+          <div class="filter-group">
+            <h4>Category</h4>
+            <div class="filter-options">
+              <label class="form-check">
+                <input type="checkbox" data-filter-category="Category A">
+                <label>Category A <small style="color:var(--color-text-muted)">(14)</small></label>
+              </label>
+              <label class="form-check">
+                <input type="checkbox" data-filter-category="Category B">
+                <label>Category B <small style="color:var(--color-text-muted)">(9)</small></label>
+              </label>
+              <label class="form-check">
+                <input type="checkbox" data-filter-category="Category C">
+                <label>Category C <small style="color:var(--color-text-muted)">(11)</small></label>
+              </label>
+            </div>
+          </div>
+
+          <hr class="filter-divider">
+
+          <!-- Price range -->
+          <div class="filter-group">
+            <h4>Price Range</h4>
+            <div class="price-range-display">
+              <span>$0</span>
+              <span id="price-max">$200</span>
+            </div>
+            <input type="range" id="price-range" min="0" max="200" value="200" step="5" aria-label="Maximum price">
+          </div>
+
+          <hr class="filter-divider">
+
+          <!-- Rating -->
+          <div class="filter-group">
+            <h4>Min. Rating</h4>
+            <div class="filter-options">
+              <label class="form-check">
+                <input type="radio" name="rating" value="4.5">
+                <label>★★★★★ 4.5+</label>
+              </label>
+              <label class="form-check">
+                <input type="radio" name="rating" value="4">
+                <label>★★★★ 4.0+</label>
+              </label>
+              <label class="form-check">
+                <input type="radio" name="rating" value="3">
+                <label>★★★ 3.0+</label>
+              </label>
+            </div>
+          </div>
+
+          <hr class="filter-divider">
+
+          <!-- Color -->
+          <div class="filter-group">
+            <h4>Color</h4>
+            <div class="color-swatches">
+              <div class="color-swatch" style="background:#1f2937" title="Black" aria-label="Black"></div>
+              <div class="color-swatch" style="background:#f9fafb; border:1px solid #e5e7eb" title="White" aria-label="White"></div>
+              <div class="color-swatch" style="background:#6366f1" title="Indigo" aria-label="Indigo"></div>
+              <div class="color-swatch" style="background:#ef4444" title="Red" aria-label="Red"></div>
+              <div class="color-swatch" style="background:#f59e0b" title="Amber" aria-label="Amber"></div>
+              <div class="color-swatch" style="background:#10b981" title="Emerald" aria-label="Emerald"></div>
+              <div class="color-swatch" style="background:#3b82f6" title="Blue" aria-label="Blue"></div>
+              <div class="color-swatch" style="background:#ec4899" title="Pink" aria-label="Pink"></div>
+            </div>
+          </div>
+
+          <hr class="filter-divider">
+
+          <!-- Availability -->
+          <div class="filter-group">
+            <h4>Availability</h4>
+            <div class="filter-options">
+              <label class="form-check">
+                <input type="checkbox" checked>
+                <label>In Stock</label>
+              </label>
+              <label class="form-check">
+                <input type="checkbox">
+                <label>Pre-Order</label>
+              </label>
+            </div>
+          </div>
+
+        </aside>
+        <!-- /filter-sidebar -->
+
+        <!-- ======= PRODUCT GRID AREA ======= -->
+        <div>
+
+          <!-- Toolbar -->
+          <div class="shop-toolbar">
+            <p class="shop-toolbar__count">
+              Showing <span id="product-count">12</span> products
+            </p>
+
+            <div class="shop-toolbar__controls">
+              <!-- Sort -->
+              <select id="sort-select" class="form-control" style="min-width:180px" aria-label="Sort products">
+                <option value="default">Sort: Featured</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating">Top Rated</option>
+                <option value="name">Name A–Z</option>
+                <option value="reviews">Most Reviewed</option>
+              </select>
+
+              <!-- View toggle -->
+              <div class="view-toggle" role="group" aria-label="View mode">
+                <button class="view-btn active" data-view="grid" aria-label="Grid view">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/>
+                  </svg>
+                </button>
+                <button class="view-btn" data-view="list" aria-label="List view">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Active filter tags (optional UI) -->
+          <div class="active-filters" id="active-filters"></div>
+
+          <!-- Product grid – populated by products.js -->
+          <div class="products-grid" id="products-grid" aria-live="polite" aria-label="Product grid">
+            <!-- JS renders cards here -->
+          </div>
+
+        </div><!-- /product grid area -->
+
+      </div><!-- /shop-layout -->
+
+    </div>
+  </section>
+</main>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo"><div class="nav-logo-icon">F</div> Your Store Name</div>
+        <p>Quality products, unbeatable prices, and a shopping experience you'll love.</p>
+        <div class="footer-social">
+          <a href="#" class="social-btn" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col"><h4>Shop</h4><ul class="footer-links"><li><a href='/products'>All Products</a></li><li><a href="#">New Arrivals</a></li><li><a href="#">Sale</a></li></ul></div>
+      <div class="footer-col"><h4>Help</h4><ul class="footer-links"><li><a href='/contact'>Contact Us</a></li><li><a href="#">FAQs</a></li><li><a href="#">Shipping</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul class="footer-links"><li><a href='/about'>About</a></li><li><a href="#">Privacy</a></li><li><a href="#">Terms</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Your Store Name. All rights reserved.</p>
+      <div class="footer-payments"><span class="payment-tag">VISA</span><span class="payment-tag">MC</span><span class="payment-tag">PayPal</span><span class="payment-tag">Apple Pay</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+<script src="js/products.js"></script>
+
+</body>
+</html>

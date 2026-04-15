@@ -20,6 +20,7 @@
             --slate-mid:  #4a5568;
             --muted:      #6b7280;
             --terra:      #b2734d;
+            --terra-light:  #d4a185;
             --terra-dark: #8f5a3a;
             --border:     #dee0e4;
             --white:      #ffffff;
@@ -36,63 +37,145 @@
             flex-direction: column;
         }
 
-        /* Navigation */
+         /* ── Announcement Banner ── */
+        .announcement-bar {
+            background: var(--slate);
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+            padding: 0.55rem 1rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+        }
+
+        .announcement-bar a {
+            color: var(--terra-light);
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 0.5rem;
+        }
+
+        /* ── Navigation ── */
         .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 200;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 2.5rem;
-            height: 56px;
-            background: rgba(249, 248, 246, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(222, 224, 228, 0.6);
+            height: 64px;
+            background: rgba(249, 248, 246, 0.95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(222, 224, 228, 0.7);
+            box-shadow: var(--shadow-sm);
         }
 
         .nav-logo {
             font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.3rem;
-            font-weight: 500;
-            letter-spacing: 0.25em;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
             color: var(--slate);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--terra);
         }
 
         .nav-center {
             display: flex;
             align-items: center;
-            gap: 2.5rem;
+            gap: 0.25rem;
         }
 
         .nav-center a {
-            font-size: 0.85rem;
+            font-size: 0.875rem;
+            font-weight: 500;
             color: var(--slate-mid);
             text-decoration: none;
-            transition: color 0.2s;
+            padding: 0.5rem 0.9rem;
+            border-radius: var(--radius-pill);
+            transition: color 0.2s, background 0.2s;
         }
 
-        .nav-center a:hover { color: var(--slate); }
+        .nav-center a:hover,
+        .nav-center a.active {
+            color: var(--slate);
+            background: var(--cream-dark);
+        }
+
+        .nav-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .coming-soon-tag {
+            font-size: 0.62rem;
+            background: var(--terra);
+            color: var(--white);
+            border-radius: var(--radius-pill);
+            padding: 0.15rem 0.55rem;
+            letter-spacing: 0.04em;
+            font-weight: 500;
+        }
 
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 0.5rem;
         }
 
-        .nav-right a, .nav-right button {
-            font-size: 0.85rem;
-            color: var(--slate-mid);
-            text-decoration: none;
+        .nav-icon-btn {
             display: flex;
             align-items: center;
-            gap: 0.4rem;
-            transition: color 0.2s;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: var(--radius-sm);
+            color: var(--slate-mid);
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
         }
 
-        .nav-right a:hover, .nav-right button:hover { color: var(--slate); }
+        .nav-icon-btn:hover {
+            background: var(--cream-dark);
+            color: var(--slate);
+        }
+
+        .nav-icon-btn svg { width: 18px; height: 18px; }
+
+        .btn-nav-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: var(--terra);
+            color: var(--white);
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            padding: 0.55rem 1.2rem;
+            border-radius: var(--radius-pill);
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 8px rgba(178,115,77,0.3);
+        }
+
+        .btn-nav-primary:hover {
+            background: var(--terra-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(178,115,77,0.4);
+        }
 
         /* Main content */
         .main-content {
@@ -230,26 +313,53 @@
 </head>
 <body>
 
-    <!-- Navigation -->
+<!-- ── Announcement Banner ── -->
+    <div class="announcement-bar">
+        ✦ New memberships now open — Start your journey today.
+        <a href="/register">Join Now →</a>
+    </div>
+
+    <!-- ── Navigation ── -->
     <nav class="navbar">
-        <a href="/" class="nav-logo">V I A</a>
+        <a href="/" class="nav-logo">
+            <span class="nav-logo-dot"></span>
+            VIA
+        </a>
+
         <div class="nav-center">
-            <a href="/subscribe">Explore Opportunities</a>
+            <a href="/">Home</a>
+            <a href="/subscribe">Opportunities</a>
             <a href="/store">Store</a>
-            <a href="/dashboard">Dashboard</a>
+            <a href="#">Community</a>
+            <a href="#">Blog</a>
+            <span class="nav-badge">
+                <a href="#">Events</a>
+                <span class="coming-soon-tag">Soon</span>
+            </span>
         </div>
+
         <div class="nav-right">
-            <form method="POST" action="{{ route('logout') }}" style="display:inline;">
-                @csrf
-                <button type="submit">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
-                        <polyline points="10 17 15 12 10 7"/>
-                        <line x1="15" y1="12" x2="3" y2="12"/>
-                    </svg>
-                    Logout
-                </button>
-            </form>
+            <!-- Cart -->
+            <a href="/store" class="nav-icon-btn" aria-label="Cart">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                    <line x1="3" y1="6" x2="21" y2="6"/>
+                    <path d="M16 10a4 4 0 0 1-8 0"/>
+                </svg>
+            </a>
+            <!-- Login -->
+            <a href="/login" class="nav-icon-btn" aria-label="Login">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                    <polyline points="10 17 15 12 10 7"/>
+                    <line x1="15" y1="12" x2="3" y2="12"/>
+                </svg>
+            </a>
+            <a href="/register" class="btn-nav-primary">Join VIA</a>
+
+            <div class="nav-mobile-toggle" onclick="toggleMobileNav()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </div>
         </div>
     </nav>
 

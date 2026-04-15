@@ -31,4 +31,18 @@ class StoreController extends Controller
 
         return view('via.store', compact('products', 'categories', 'category'));
     }
+    public function show($id)
+    {
+        $product = Product::where('status', 'Active')->findOrFail($id);
+
+        // Fetch related products (same category, excluding the current one)
+        $relatedProducts = Product::where('status', 'Active')
+            ->where('category', $product->category)
+            ->where('id', '!=', $product->id)
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
+
+        return view('via.product', compact('product', 'relatedProducts'));
+    }
 }

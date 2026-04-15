@@ -13,10 +13,13 @@ Route::get('/subscribe', function () {
     return view('via.subscription');
 })->name('subscribe');
 
+Route::view('/about', 'via.about')->name('about');
+Route::view('/contact', 'via.contact')->name('contact');
+
 
 // ── Public Store ───────────────────────────────────────────────────────
 Route::get('/store', [StoreController::class, 'index'])->name('store.index');
-
+Route::get('/store/{id}', [StoreController::class, 'show'])->name('store.show');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

@@ -1,0 +1,103 @@
+
+   INFO  Seeding database.  
+
+
+   BadMethodCallException 
+
+  Call to undefined method Database\Factories\UserFactory::firstOrCreate()
+
+  at vendor/laravel/framework/src/Illuminate/Support/Traits/ForwardsCalls.php:67
+     63▕      * @throws \BadMethodCallException
+     64▕      */
+     65▕     protected static function throwBadMethodCallException($method)
+     66▕     {
+  ➜  67▕         throw new BadMethodCallException(sprintf(
+     68▕             'Call to undefined method %s::%s()', static::class, $method
+     69▕         ));
+     70▕     }
+     71▕ }
+
+  1   vendor/laravel/framework/src/Illuminate/Database/Eloquent/Factories/Factory.php:1114
+      Illuminate\Database\Eloquent\Factories\Factory::throwBadMethodCallException()
+
+  2   database/seeders/DatabaseSeeder.php:20
+      Illuminate\Database\Eloquent\Factories\Factory::__call()
+
+  3   vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:36
+      Database\Seeders\DatabaseSeeder::run()
+
+  4   vendor/laravel/framework/src/Illuminate/Container/Util.php:43
+      Illuminate\Container\BoundMethod::{closure:Illuminate\Container\BoundMethod::call():35}()
+
+  5   vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:96
+      Illuminate\Container\Util::unwrapIfClosure()
+
+  6   vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:35
+      Illuminate\Container\BoundMethod::callBoundMethod()
+
+  7   vendor/laravel/framework/src/Illuminate/Container/Container.php:799
+      Illuminate\Container\BoundMethod::call()
+
+  8   vendor/laravel/framework/src/Illuminate/Database/Seeder.php:184
+      Illuminate\Container\Container::call()
+
+  9   vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasEvents.php:454
+      Illuminate\Database\Seeder::{closure:Illuminate\Database\Seeder::__invoke():183}()
+
+  10  vendor/laravel/framework/src/Illuminate/Database/Console/Seeds/WithoutModelEvents.php:17
+      Illuminate\Database\Eloquent\Model::withoutEvents()
+
+  11  vendor/laravel/framework/src/Illuminate/Database/Seeder.php:193
+      Database\Seeders\DatabaseSeeder::{closure:Illuminate\Database\Console\Seeds\WithoutModelEvents::withoutModelEvents():17}()
+
+  12  vendor/laravel/framework/src/Illuminate/Database/Console/Seeds/SeedCommand.php:71
+      Illuminate\Database\Seeder::__invoke()
+
+  13  vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/GuardsAttributes.php:157
+      Illuminate\Database\Console\Seeds\SeedCommand::{closure:Illuminate\Database\Console\Seeds\SeedCommand::handle():70}()
+
+  14  vendor/laravel/framework/src/Illuminate/Database/Console/Seeds/SeedCommand.php:70
+      Illuminate\Database\Eloquent\Model::unguarded()
+
+  15  vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:36
+      Illuminate\Database\Console\Seeds\SeedCommand::handle()
+
+  16  vendor/laravel/framework/src/Illuminate/Container/Util.php:43
+      Illuminate\Container\BoundMethod::{closure:Illuminate\Container\BoundMethod::call():35}()
+
+  17  vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:96
+      Illuminate\Container\Util::unwrapIfClosure()
+
+  18  vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php:35
+      Illuminate\Container\BoundMethod::callBoundMethod()
+
+  19  vendor/laravel/framework/src/Illuminate/Container/Container.php:799
+      Illuminate\Container\BoundMethod::call()
+
+  20  vendor/laravel/framework/src/Illuminate/Console/Command.php:211
+      Illuminate\Container\Container::call()
+
+  21  vendor/symfony/console/Command/Command.php:341
+      Illuminate\Console\Command::execute()
+
+  22  vendor/laravel/framework/src/Illuminate/Console/Command.php:180
+      Symfony\Component\Console\Command\Command::run()
+
+  23  vendor/symfony/console/Application.php:1117
+      Illuminate\Console\Command::run()
+
+  24  vendor/symfony/console/Application.php:356
+      Symfony\Component\Console\Application::doRunCommand()
+
+  25  vendor/symfony/console/Application.php:195
+      Symfony\Component\Console\Application::doRun()
+
+  26  vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php:198
+      Symfony\Component\Console\Application::run()
+
+  27  vendor/laravel/framework/src/Illuminate/Foundation/Application.php:1235
+      Illuminate\Foundation\Console\Kernel::handle()
+
+  28  artisan:16
+      Illuminate\Foundation\Application::handleCommand()
+
