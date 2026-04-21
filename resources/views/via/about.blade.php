@@ -2,11 +2,11 @@
 
 @section('content')
 <style>
-    .about-header { text-align: center; padding: 6rem 2rem; background: var(--white); border-bottom: 1px solid var(--border); }
+    .about-header { text-align: center; padding: 2rem 1rem; background: var(--white); border-bottom: 1px solid var(--border); }
     .about-header h1 { font-family: 'Cormorant Garamond', serif; font-size: 4rem; color: var(--slate); margin-bottom: 1rem; }
     .about-header p { color: var(--slate-mid); font-size: 1.25rem; max-width: 600px; margin: 0 auto; }
 
-    .about-section { padding: 5rem 2rem; max-width: 1000px; margin: 0 auto; }
+    .about-section { padding: 5rem 1rem; max-width: 1000px; margin: 0 auto; }
     
     .story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 6rem; }
     .story-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--slate); margin-bottom: 1.5rem; }

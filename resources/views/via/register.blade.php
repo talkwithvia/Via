@@ -352,4 +352,4 @@
         label.style.color = score > 0 ? level.c : 'var(--muted)';
     }
 </script>
-@endsection
+<!-- @endsection -->

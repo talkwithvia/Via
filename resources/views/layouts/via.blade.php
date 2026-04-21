@@ -25,32 +25,58 @@
 
         body { font-family: 'Inter', sans-serif; background-color: var(--cream); color: var(--slate); line-height: 1.6; }
         
+        /* ── Top delivery strip ── */
         .promo-banner {
-            background-color: var(--slate); color: var(--cream);
-            text-align: center; padding: 0.6rem; font-size: 0.85rem; letter-spacing: 0.05em;
+            background-color: var(--white);
+            color: var(--slate-mid);
+            border-bottom: 1px solid var(--border);
+            padding: 0.55rem 2.5rem;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
         }
-        .promo-banner a { color: #d49875; text-decoration: none; font-weight: 600; margin-left: 0.5rem; transition: var(--transition); }
+        .promo-banner .promo-right { display: flex; align-items: center; gap: 1.5rem; }
+        .promo-banner a { color: var(--slate-mid); text-decoration: none; font-weight: 500; transition: var(--transition); }
         .promo-banner a:hover { color: var(--terra); }
+        .promo-banner strong { color: var(--slate); }
 
+        /* ── Navbar ── */
         .navbar {
-            background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(8px);
+            background-color: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
             border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 50;
-            padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center;
+            padding: 0.85rem 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
         }
-        .nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-weight: 600; color: var(--slate); text-decoration: none; letter-spacing: 0.1em; }
-        .nav-links { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; }
+        .nav-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--slate); text-decoration: none; letter-spacing: 0.12em; }
+        /* Center nav links */
+        .nav-links { display: flex; gap: 2.2rem; list-style: none; margin: 0; padding: 0; justify-content: center; }
         .nav-links li { margin: 0; }
-        .nav-links a { text-decoration: none; color: var(--slate-mid); font-weight: 500; font-size: 0.95rem; transition: var(--transition); }
-        .nav-links a:hover, .nav-links a.active { color: var(--terra); text-decoration: none; }
-        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+        .nav-links a {
+            text-decoration: none; color: var(--slate-mid); font-weight: 500; font-size: 0.92rem;
+            transition: var(--transition); padding-bottom: 3px;
+        }
+        .nav-links a:hover { color: var(--terra); }
+        .nav-links a.active {
+            color: var(--terra); font-weight: 600;
+            border-bottom: 2px solid var(--terra);
+        }
+        /* Icons pushed right */
+        .nav-actions { display: flex; gap: 0.5rem; align-items: center; justify-content: flex-end; }
         .icon-btn {
-            background: none; border: none; cursor: pointer; color: var(--slate); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: var(--transition); position: relative;
+            background: none; border: none; cursor: pointer; color: var(--slate);
+            width: 38px; height: 38px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); position: relative;
         }
         .icon-btn:hover { background-color: var(--cream); color: var(--terra); }
-        .icon-btn svg { width: 22px; height: 22px; }
+        .icon-btn svg { width: 20px; height: 20px; }
         .cart-badge {
             position: absolute; top: 2px; right: 2px; background-color: var(--terra); color: var(--white);
-            font-size: 0.65rem; border-radius: 50%; width: 16px; height: 16px;
+            font-size: 0.6rem; border-radius: 50%; width: 15px; height: 15px;
             display: flex; align-items: center; justify-content: center; font-weight: bold;
         }
 
@@ -64,35 +90,28 @@
         .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; color: var(--slate-light); font-size: 0.85rem; }
 
         @media (max-width: 900px) {
-            .navbar { padding: 1rem; flex-wrap: wrap; }
-            .nav-left { flex: 1; display: flex; align-items: center; }
-            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; color: var(--slate); margin-right: 1rem; }
-            .nav-links { 
+            .promo-banner { padding: 0.5rem 1rem; font-size: 0.72rem; }
+            .promo-banner .promo-right { display: none; }
+            .navbar { padding: 0.85rem 1rem; grid-template-columns: auto 1fr auto; }
+            .nav-left { display: flex; align-items: center; }
+            .mobile-menu-btn { display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; color: var(--slate); margin-right: 0.75rem; }
+            .nav-links {
                 position: fixed; top: 0; left: -100%; width: 280px; height: 100vh;
                 background: var(--white); flex-direction: column; text-align: left;
                 padding: 6rem 2rem; gap: 1.5rem; z-index: 100; transition: var(--transition);
-                box-shadow: 20px 0 50px rgba(0,0,0,0.1);
+                box-shadow: 20px 0 50px rgba(0,0,0,0.1); justify-content: flex-start;
             }
             .nav-links.is-open { left: 0; }
-            .nav-actions { order: 2; }
-            
-            /* Backdrop when menu is open */
             .nav-backdrop {
                 position: fixed; inset: 0; background: rgba(0,0,0,0.3); backdrop-filter: blur(4px);
                 z-index: 90; opacity: 0; pointer-events: none; transition: var(--transition);
             }
             .nav-backdrop.is-open { opacity: 1; pointer-events: auto; }
-            
-            .nav-links a { font-size: 1.2rem; display: block; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+            .nav-links a { font-size: 1.1rem; display: block; padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
             .nav-links li:last-child a { border-bottom: none; }
-            .footer-grid { 
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 2rem; 
-                text-align: left; 
-            }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; text-align: left; }
             .footer-col:first-child { grid-column: 1 / -1; text-align: center; margin-bottom: 2rem; }
             .footer-col:first-child p { margin: 0 auto; }
-            .footer-col h4 { margin-top: 1rem; }
         }
         @media (min-width: 901px) {
             .mobile-menu-btn { display: none; }
@@ -102,7 +121,11 @@
 <body>
     
     <div class="promo-banner">
-        ✦ New memberships now open — Start your journey today. <a href="{{ route('register') }}">Join Now &rarr;</a>
+        <span>🚚 Free delivery on orders over <strong>KSh 5,000</strong></span>
+        <div class="promo-right">
+            <span>Need help? <strong>+254 712 345 678</strong></span>
+            <a href="{{ route('login') }}">Login / Register</a>
+        </div>
     </div>
 
     <div class="nav-backdrop" id="navBackdrop" onclick="toggleMobileNav()"></div>
@@ -124,7 +147,7 @@
         
         <ul class="nav-links" id="mobileNavLinks">
             <li><a href="/" class="{{ request()->is('/') ? 'active' : '' }}">Home</a></li>
-            <li><a href="/store" class="{{ request()->is('store*') ? 'active' : '' }}">Shop</a></li>
+            <li><a href="/store" class="{{ request()->is('store*') ? 'active' : '' }}">VIA Store</a></li>
             <li><a href="/about" class="{{ request()->is('about') ? 'active' : '' }}">About</a></li>
             <li><a href="/contact" class="{{ request()->is('contact') ? 'active' : '' }}">Contact</a></li>
         </ul>
@@ -150,7 +173,7 @@
                 <p style="color: var(--slate-mid); font-size: 0.95rem; max-width: 300px;">A premium platform bringing you the finest goods designed for the modern professional.</p>
             </div>
             <div class="footer-col">
-                <h4>Shop</h4>
+                <h4>VIA Store</h4>
                 <ul>
                     <li><a href="/store">All Products</a></li>
                     <li><a href="/store">New Arrivals</a></li>
