@@ -201,5 +201,8 @@
             &copy; {{ date('Y') }} VIA. All rights reserved.
         </div>
     </footer>
+
+    {{-- Page-specific scripts pushed from child views --}}
+    @stack('scripts')
 </body>
 </html>
